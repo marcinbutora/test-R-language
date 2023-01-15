@@ -12,27 +12,26 @@ read_one <- function(id){
 }
 
 # create function that exist user is already in database
-create <- function(name, age){
+create <- function(name, age, email){
   # check if user already exists
-  existing_user <- data[data[,1] == name & data[,2] == age,]
+  existing_user <- data[data[,"email"] == email,]
   if(nrow(existing_user) > 0){
     return(list(status = "error", message = "User already exists"))
   }
   new_id <- nrow(data) + 1
-  data[new_id,] <- c(name, age)
+  data[new_id,] <- c(name, age, email)
   return(list(status = "success", data = data[new_id,]))
 }
-#
 
 # function to update a record
-update <- function(id, name, age){
-  existing_user <- data[data[,1] == name & data[,2] == age,]
+update <- function(id, name, age, email){
+  existing_user <- data[data[,"email"] == email,]
   if(nrow(existing_user) > 0){
     if(existing_user[1,] != data[id,]){
       return(list(status = "error", message = "User already exists"))
     }
   }
-  data[id,] <- c(name, age)
+  data[id,] <- c(name, age, email)
   return(list(status = "success", data = data[id,]))
 }
 
