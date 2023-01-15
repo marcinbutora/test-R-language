@@ -26,8 +26,14 @@ create <- function(name, age){
 
 # function to update a record
 update <- function(id, name, age){
+  existing_user <- data[data[,1] == name & data[,2] == age,]
+  if(nrow(existing_user) > 0){
+    if(existing_user[1,] != data[id,]){
+      return(list(status = "error", message = "User already exists"))
+    }
+  }
   data[id,] <- c(name, age)
-  return(data[id,])
+  return(list(status = "success", data = data[id,]))
 }
 
 # function to delete a record
